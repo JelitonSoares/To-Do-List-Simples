@@ -1,5 +1,6 @@
 package br.com.jeli.todolist.service;
 
+import br.com.jeli.todolist.model.sessao.Sessao;
 import br.com.jeli.todolist.model.usuario.Usuario;
 import br.com.jeli.todolist.model.usuario.UsuarioDAO;
 import br.com.jeli.todolist.util.JPAUtil;
@@ -10,6 +11,8 @@ public class UsuarioService {
 
     private EntityManager em;
     private UsuarioDAO usuarioDAO;
+    private Sessao atual;
+
 
     public UsuarioService(){
         this.em = JPAUtil.getEntityManager();
@@ -27,6 +30,7 @@ public class UsuarioService {
         Usuario usuario = buscarUsuarioPorId(id);
 
         if(senha.equals(usuario.getSenha())) {
+            this.atual = new Sessao(usuario);
             return true;
         }
 
@@ -35,6 +39,10 @@ public class UsuarioService {
 
     private Usuario buscarUsuarioPorId(String id) {
         return usuarioDAO.buscarPorId(id);
+    }
+
+    public String getNomeSessaoAtual() {
+        return this.atual.getNomeSessao();
     }
 
 }

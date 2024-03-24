@@ -1,0 +1,40 @@
+package br.com.jeli.todolist.service;
+
+import br.com.jeli.todolist.model.usuario.Usuario;
+import br.com.jeli.todolist.model.usuario.UsuarioDAO;
+import br.com.jeli.todolist.util.JPAUtil;
+
+import javax.persistence.EntityManager;
+
+public class UsuarioService {
+
+    private EntityManager em;
+    private UsuarioDAO usuarioDAO;
+
+    public UsuarioService(){
+        this.em = JPAUtil.getEntityManager();
+        this.usuarioDAO = new UsuarioDAO(em);
+    }
+
+    public void cadastrar(Usuario usuario) {
+        this.em.getTransaction().begin();
+        this.usuarioDAO.cadastrar(usuario);
+        this.em.getTransaction().commit();
+        this.em.close();
+    }
+
+    public boolean entrar(String id, String senha) {
+        Usuario usuario = buscarUsuarioPorId(id);
+
+        if(senha.equals(usuario.getSenha())) {
+            return true;
+        }
+
+        throw new RuntimeException("Senha não confere!!");
+    }
+
+    private Usuario buscarUsuarioPorId(String id) {
+        return usuarioDAO.buscarPorId(id);
+    }
+
+}

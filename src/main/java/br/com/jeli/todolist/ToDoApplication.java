@@ -1,24 +1,22 @@
 package br.com.jeli.todolist;
 
 import br.com.jeli.todolist.model.usuario.Usuario;
+import br.com.jeli.todolist.service.TarefaService;
 import br.com.jeli.todolist.service.UsuarioService;
+
 
 import java.util.Scanner;
 
 public class ToDoApplication {
+    private static Scanner scanner = new Scanner(System.in).useDelimiter("\n"); //Atributo para ler o teclado
+    private static UsuarioService usuarioService = new UsuarioService(); //Service pra realizar operações de Usuario
 
-    private static Scanner scanner = new Scanner(System.in).useDelimiter("\n");
-    private static UsuarioService usuarioService = new UsuarioService();
+    private static TarefaService tarefaService = new TarefaService();
 
 
     public static void main(String [] args) {
-        menuPrincipal();
-
-    }
-
-    private static void menuPrincipal() {
         System.out.println("Running...");
-        int opcao = exibirMenu();
+        int opcao = exibirMenu(); //Chama o método exibir menu que retorna um inteiro com a escolha do cliente
         while (opcao != 3) {
             switch (opcao) {
                 case 1:
@@ -28,10 +26,11 @@ public class ToDoApplication {
                     cadastrar();
                     break;
             }
-            opcao = exibirMenu();
+            opcao = exibirMenu();   //Chamamos novamente o método para que o usuario possa novamente realizar as escolhas
         }
-        System.out.println("Volte Logo");
+        System.out.println("Volte Logo"); //Caso escolha 3 (SAIR) encerramos a aplicação
         System.out.println("Closing...");
+
     }
 
     private static int exibirMenu() {
@@ -40,9 +39,9 @@ public class ToDoApplication {
                 1 - ENTRAR
                 2 - CADASTRAR
                 3 - SAIR(ENCERRAR APLICAÇÃO)
-                """;
+                """;                                      //Menu para escolha
         System.out.println(menu);
-        return scanner.nextInt();
+        return scanner.nextInt();                        //Retorno da escolha do cliente
     }
 
     private static void entrar() {
@@ -50,13 +49,14 @@ public class ToDoApplication {
         String id = scanner.next();
         System.out.println("Digite sua senha: ");
         String senha = scanner.next();
-
         Boolean entrou = usuarioService.entrar(id, senha);
         menuDeConta(entrou);
-
+        System.out.println("Pressione enter para voltar ao menu principal: ");
+        scanner.next();
     }
 
     private static void menuDeConta(Boolean entrou) {
+        System.out.println("***********Bem vindo " + usuarioService.getNomeSessaoAtual() + "***********");
         while(entrou) {
             Integer menuConta = exibirMenuDeConta();
             switch (menuConta) {
@@ -72,10 +72,10 @@ public class ToDoApplication {
                 case 4:
                     removerTarefa();
                     break;
-
-            }
-            menuConta = exibirMenuDeConta();
-
+                case 5:
+                    System.out.println("Saindo...");
+                    entrou = false;                              //Variavel que controla o loop alteramos para false
+            }                                                   // Para voltar ao menu principal
         }
     }
 
@@ -92,7 +92,10 @@ public class ToDoApplication {
     }
 
     private static void listarTarefas() {
-
+        tarefaService.listar();
+        scanner.next();
+        System.out.println("Pressione enter para voltar ao menu de conta: ");
+        scanner.next();
     }
 
     private static void marcarTarefa() {

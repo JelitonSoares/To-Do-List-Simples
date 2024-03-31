@@ -21,4 +21,8 @@ public class NivelUrgenciaService {
         nivelUrgenciaDAO.salvar(urgencia);
         this.em.getTransaction().commit();
     }
+
+    public NivelUrgencia buscarPorId(Long idUrgencia) {
+        return nivelUrgenciaDAO.buscarPorId(idUrgencia);
+    }
 }

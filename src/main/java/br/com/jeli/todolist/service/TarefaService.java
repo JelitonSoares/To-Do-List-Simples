@@ -20,7 +20,7 @@ public class TarefaService {
 
     public void listar() {
         List<Tarefa> tarefaList =  this.tarefaDAO.listarTarefa();
-        System.out.println(tarefaList);
+        tarefaList.forEach(System.out::println);
         System.out.println("Enter para continuar: ");
     }
 

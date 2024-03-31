@@ -1,6 +1,10 @@
 package br.com.jeli.todolist;
 
+import br.com.jeli.todolist.model.tarefa.Tarefa;
+import br.com.jeli.todolist.model.urgencia.Categoria;
+import br.com.jeli.todolist.model.urgencia.NivelUrgencia;
 import br.com.jeli.todolist.model.usuario.Usuario;
+import br.com.jeli.todolist.service.NivelUrgenciaService;
 import br.com.jeli.todolist.service.TarefaService;
 import br.com.jeli.todolist.service.UsuarioService;
 
@@ -12,6 +16,7 @@ public class ToDoApplication {
     private static UsuarioService usuarioService = new UsuarioService(); //Service pra realizar operações de Usuario
 
     private static TarefaService tarefaService = new TarefaService();
+    private static NivelUrgenciaService nivelUrgenciaService = new NivelUrgenciaService();
 
 
     public static void main(String [] args) {
@@ -64,15 +69,21 @@ public class ToDoApplication {
                     listarTarefas();
                     break;
                 case 2:
-                    marcarTarefa();
+                    criarTarefa();
                     break;
                 case 3:
-                    atualizarTarefa();
+                    marcarTarefa();
                     break;
                 case 4:
-                    removerTarefa();
+                    atualizarNomeTarefa();
                     break;
                 case 5:
+                    atualizarUrgenciaTarefa();
+                    break;
+                case 6:
+                    removerTarefa();
+                    break;
+                case 7:
                     System.out.println("Saindo...");
                     entrou = false;                              //Variavel que controla o loop alteramos para false
             }                                                   // Para voltar ao menu principal
@@ -82,10 +93,12 @@ public class ToDoApplication {
     private static int exibirMenuDeConta() {
         String menuDeConta = """
                 1 - Listar Todas Tarefas
-                2 - Marcar Tarefa como feita
-                3 - Atualizar Tarefa
-                4 - Remover Tarefa
-                5 - Sair
+                2 - Criar Tarefa
+                3 - Marcar Tarefa como Feita
+                4 - Atualizar Nome da Tarefa
+                5 - Atualizar Urgencia da Tarefa
+                6 - Remover Tarefa
+                7 - Sair
                 """;
         System.out.println(menuDeConta);
         return scanner.nextInt();
@@ -98,16 +111,53 @@ public class ToDoApplication {
         scanner.next();
     }
 
+    private static void criarTarefa() {
+        System.out.println("Digite qual é sua tarefa: ");
+        String texto = scanner.next();
+        System.out.println("Digite a sua urgencia: 1) URGENTE  2) ASSIM QUE POSSÍVEL 3) ADIAVEL");
+        Integer urgenciaInt = scanner.nextInt();
+        NivelUrgencia urgencia = cadastrarUrgencia(urgenciaInt);
+        Usuario usuario = usuarioService.getUsuarioSessaoAtual();
+        Tarefa tarefa = new Tarefa(usuario, texto, urgencia);
+        nivelUrgenciaService.cadastrar(urgencia);
+        tarefaService.criarTarefa(tarefa);
+
+        System.out.println("Usuario cadastrado com sucesso");
+        System.out.println("Pressione enter para voltar ao menu");
+        scanner.next();
+    }
+
     private static void marcarTarefa() {
 
     }
 
-    private static void atualizarTarefa() {
+    private static void atualizarNomeTarefa() {
+
+    }
+
+    private static void atualizarUrgenciaTarefa() {
 
     }
 
     private static void removerTarefa() {
 
+    }
+
+    private static NivelUrgencia cadastrarUrgencia(Integer urgenciaInt) {
+        NivelUrgencia urgencia = null;
+        if (urgenciaInt.equals(1)) {
+            urgencia = new NivelUrgencia(Categoria.URGENTE);
+        }
+
+        if(urgenciaInt.equals(2)) {
+            urgencia = new NivelUrgencia(Categoria.ASSIM_QUE_POSSIVEL);
+        }
+
+        if(urgenciaInt.equals(3)) {
+            urgencia = new NivelUrgencia(Categoria.ADIAVEL);
+        }
+
+        return urgencia;
     }
 
 
@@ -140,8 +190,6 @@ public class ToDoApplication {
         Usuario usuario = new Usuario(id, nome, senha);
         usuarioService.cadastrar(usuario);
 
-        System.out.println("Usuario cadastrado com sucesso");
-        System.out.println("Pressione enter para voltar ao menu");
-        scanner.next();
+
     }
 }

@@ -116,34 +116,62 @@ public class ToDoApplication {
         String texto = scanner.next();
         System.out.println("Digite a sua urgencia: 1) URGENTE  2) ASSIM QUE POSSÍVEL 3) ADIAVEL");
         Integer urgenciaInt = scanner.nextInt();
-        NivelUrgencia urgencia = cadastrarUrgencia(urgenciaInt);
+        NivelUrgencia urgencia = selecionarUrgencia(urgenciaInt);
         Usuario usuario = usuarioService.getUsuarioSessaoAtual();
         Tarefa tarefa = new Tarefa(usuario, texto, urgencia);
         nivelUrgenciaService.cadastrar(urgencia);
         tarefaService.criarTarefa(tarefa);
 
-        System.out.println("Usuario cadastrado com sucesso");
+        System.out.println("Tarefa cadastrada com sucesso");
         System.out.println("Pressione enter para voltar ao menu");
         scanner.next();
     }
 
     private static void marcarTarefa() {
+        System.out.println("Qual ID da tarefa que deseja marcar como feita? ");
+        Long idTarefa = scanner.nextLong();
+        tarefaService.marcarTarefa(idTarefa);
+
+        System.out.println("Tarefa atualizada com Sucesso!!");
+        System.out.println("Pressione enter para voltar ao menu de conta");
+        scanner.next();
 
     }
 
     private static void atualizarNomeTarefa() {
+        System.out.println("Qual id da tarefa que deseja atualizar? ");
+        Long idTarefa = scanner.nextLong();
+        System.out.println("Qual novo nome da sua tarefa? ");
+        String nome = scanner.next();
+        tarefaService.atualizarNomeTarefa(idTarefa, nome);
 
+        System.out.println("Tarefa atualizada com sucesso!!");
+        System.out.println("Pressione enter para voltar ao menu principal");
+        scanner.next();
     }
 
     private static void atualizarUrgenciaTarefa() {
-
+        System.out.println("Digite o id da tarefa que deseja atualizar: ");
+        Long idTarefa = scanner.nextLong();
+        System.out.println("Digite o id da  Urgencia qe deseja inserir: 2)URGENTE 1)ASSIM QUE POSSIVEL 3)ADIAVEL");
+        Long idUrgencia = scanner.nextLong();
+        NivelUrgencia urgencia = nivelUrgenciaService.buscarPorId(idUrgencia);
+        tarefaService.atualizarUrgencia(idTarefa, urgencia);
     }
 
     private static void removerTarefa() {
+        System.out.println("Digite o id da tarefa que você deseja remover: ");
+        Long idTarefa = scanner.nextLong();
+        tarefaService.removerTarefa(idTarefa);
+
+
+        System.out.println("Tarefa removida com sucesso!!");
+        System.out.println("Pressione enter para voltar ao menu");
+        scanner.next();
 
     }
 
-    private static NivelUrgencia cadastrarUrgencia(Integer urgenciaInt) {
+    private static NivelUrgencia selecionarUrgencia(Integer urgenciaInt) {
         NivelUrgencia urgencia = null;
         if (urgenciaInt.equals(1)) {
             urgencia = new NivelUrgencia(Categoria.URGENTE);

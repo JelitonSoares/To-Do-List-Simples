@@ -14,4 +14,8 @@ public class NivelUrgenciaDAO {
     public void salvar(NivelUrgencia urgencia) {
         this.em.persist(urgencia);
     }
+
+    public NivelUrgencia buscarPorId(Long id) {
+        return this.em.find(NivelUrgencia.class, id);
+    }
 }

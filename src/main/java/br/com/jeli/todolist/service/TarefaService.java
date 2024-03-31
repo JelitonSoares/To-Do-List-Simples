@@ -22,4 +22,10 @@ public class TarefaService {
         System.out.println(tarefaList);
         System.out.println("Enter para continuar: ");
     }
+
+    public void criarTarefa(Tarefa tarefa) {
+        this.em.getTransaction().begin();
+        tarefaDAO.cadastrar(tarefa);
+        this.em.getTransaction().commit();
+    }
 }

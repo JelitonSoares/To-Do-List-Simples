@@ -50,10 +50,22 @@ public class Tarefa {
         return completa;
     }
 
+    public void marcarTarefa() {
+        this.completa = true;
+    }
+
+    public void setTarefa(String tarefa) {
+        this.tarefa = tarefa;
+    }
+
+    public void setNivelUrgencia(NivelUrgencia nivelUrgencia) {
+        this.nivelUrgencia = nivelUrgencia;
+    }
+
     @Override
     public String toString() {
         return "Tarefa{" +
-                "usuario=" + usuario +
+                "id=" + id +
                 ", tarefa='" + tarefa + '\'' +
                 ", nivelUrgencia=" + nivelUrgencia +
                 ", completa=" + completa +

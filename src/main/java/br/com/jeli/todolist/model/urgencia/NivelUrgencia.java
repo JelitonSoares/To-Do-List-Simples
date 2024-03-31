@@ -8,9 +8,10 @@ public class NivelUrgencia {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String categoria;
+    @Enumerated(EnumType.STRING)
+    private Categoria categoria;
 
-    public NivelUrgencia(String categoria) {
+    public NivelUrgencia(Categoria categoria) {
         this.categoria = categoria;
     }
 
@@ -21,7 +22,7 @@ public class NivelUrgencia {
         return id;
     }
 
-    public String getCategoria() {
+    public Categoria getCategoria() {
         return categoria;
     }
 

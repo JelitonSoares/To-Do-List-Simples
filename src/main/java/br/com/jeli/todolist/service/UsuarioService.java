@@ -23,7 +23,6 @@ public class UsuarioService {
         this.em.getTransaction().begin();
         this.usuarioDAO.cadastrar(usuario);
         this.em.getTransaction().commit();
-        this.em.close();
     }
 
     public boolean entrar(String id, String senha) {
@@ -43,6 +42,10 @@ public class UsuarioService {
 
     public String getNomeSessaoAtual() {
         return this.atual.getNomeSessao();
+    }
+
+    public Usuario getUsuarioSessaoAtual() {
+        return atual.getUsuario();
     }
 
 }

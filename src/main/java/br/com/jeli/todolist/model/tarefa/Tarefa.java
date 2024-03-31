@@ -13,9 +13,11 @@ public class Tarefa {
     @Column(name = "id_tarefa")
     private Long id;
     @ManyToOne
+    @JoinColumn(name = "usuario_id")
     private Usuario usuario;
     private String tarefa;
     @ManyToOne
+    @JoinColumn(name = "nivel_urgencia_id")
     private NivelUrgencia nivelUrgencia;
     private Boolean completa = false;
 
@@ -46,5 +48,15 @@ public class Tarefa {
 
     public Boolean getCompleta() {
         return completa;
+    }
+
+    @Override
+    public String toString() {
+        return "Tarefa{" +
+                "usuario=" + usuario +
+                ", tarefa='" + tarefa + '\'' +
+                ", nivelUrgencia=" + nivelUrgencia +
+                ", completa=" + completa +
+                '}';
     }
 }

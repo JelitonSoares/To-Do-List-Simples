@@ -2,6 +2,7 @@ package br.com.jeli.todolist.service;
 
 import br.com.jeli.todolist.model.tarefa.Tarefa;
 import br.com.jeli.todolist.model.tarefa.TarefaDAO;
+import br.com.jeli.todolist.model.urgencia.NivelUrgencia;
 import br.com.jeli.todolist.util.JPAUtil;
 
 import javax.persistence.EntityManager;
@@ -27,5 +28,21 @@ public class TarefaService {
         this.em.getTransaction().begin();
         tarefaDAO.cadastrar(tarefa);
         this.em.getTransaction().commit();
+    }
+
+    public void marcarTarefa(Long id) {
+        tarefaDAO.marcarTarefa(id);
+    }
+
+    public void atualizarNomeTarefa(Long id, String nome) {
+        tarefaDAO.atualizarNome(id, nome);
+    }
+
+    public void atualizarUrgencia(Long id, NivelUrgencia urgencia){
+        tarefaDAO.atualizarUrgencia(id, urgencia);
+    }
+
+    public void removerTarefa(Long id) {
+        tarefaDAO.remover(id);
     }
 }

@@ -153,7 +153,7 @@ public class ToDoApplication {
     private static void atualizarUrgenciaTarefa() {
         System.out.println("Digite o id da tarefa que deseja atualizar: ");
         Long idTarefa = scanner.nextLong();
-        System.out.println("Digite o id da  Urgencia qe deseja inserir: 2)URGENTE 1)ASSIM QUE POSSIVEL 3)ADIAVEL");
+        System.out.println("Digite o id da  Urgencia qe deseja inserir: 1)URGENTE 2)ASSIM QUE POSSIVEL 3)ADIAVEL");
         Long idUrgencia = scanner.nextLong();
         NivelUrgencia urgencia = nivelUrgenciaService.buscarPorId(idUrgencia);
         tarefaService.atualizarUrgencia(idTarefa, urgencia);
